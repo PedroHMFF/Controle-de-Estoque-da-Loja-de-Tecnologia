@@ -16,17 +16,20 @@ int main(){
         printf("2-Realizar Venda\n");
         printf("3-Relatório de Estoque\n");
         printf("4-Alterar o produto\n");
+        printf("5-Excluir Produto\n");
         printf("0-Para sair\n");
         printf("--->");
         scanf("%d",&opc);
 
-        if (opc != 1){
+        if (opc < 0 || opc > 5){
             printf("Entrada inválida detectada.\n");
             setbuf(stdin,NULL);
             opc = -1;//pra rodar denovo o do while
             continue;
         }//if pra verificar se a entrada e valida ou nao
         
+        setbuf(stdin, NULL);
+
         switch (opc){
         case 1:{
             Produto temp;
@@ -34,15 +37,19 @@ int main(){
             break;
         }
         case 2:
-            /*realizarVenda();*/
+            realizarVenda();
             break;
 
         case 3:
-            /*relatorioEstoque();*/
+            relatorioEstoque();
             break;
 
         case 4:
-            /*alterarProduto();*/
+            alterarProduto();
+            break;
+
+         case 5:
+            excluirProduto();
             break;
         
         case 0:

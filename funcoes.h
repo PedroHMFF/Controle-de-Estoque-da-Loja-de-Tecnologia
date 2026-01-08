@@ -14,7 +14,7 @@ void cadastrarProduto(Produto *novoProduto);
 void realizarVenda();
 void relatorioEstoque();
 void alterarProduto();
-
+void excluirProduto();
 void salvarProdutos();
 void carregarEstoque();
 
