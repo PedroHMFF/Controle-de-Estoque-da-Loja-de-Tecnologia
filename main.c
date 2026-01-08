@@ -4,7 +4,10 @@
 #include "funcoes.h"
 
 int main(){
+  
     int opc;
+    carregarEstoque();
+    
     
     do{
         printf("\n==Controle de Estoque da Loja de Tecnologia==\n");
@@ -25,20 +28,21 @@ int main(){
         }//if pra verificar se a entrada e valida ou nao
         
         switch (opc){
-        case 1:
-            cadastrarProduto();
+        case 1:{
+            Produto temp;
+            cadastrarProduto(&temp);
             break;
-
+        }
         case 2:
-            realizarVenda();
+            /*realizarVenda();*/
             break;
 
         case 3:
-            relatorioEstoque();
+            /*relatorioEstoque();*/
             break;
 
         case 4:
-            alterarProduto();
+            /*alterarProduto();*/
             break;
         
         case 0:

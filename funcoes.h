@@ -10,7 +10,7 @@ typedef struct {
     float precoVenda;   // Por quanto vai vender
 } Produto;
 
-void cadastrarProduto();
+void cadastrarProduto(Produto *novoProduto);
 void realizarVenda();
 void relatorioEstoque();
 void alterarProduto();
