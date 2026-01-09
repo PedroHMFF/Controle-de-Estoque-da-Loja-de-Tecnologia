@@ -17,11 +17,12 @@ int main(){
         printf("3-Relatório de Estoque\n");
         printf("4-Alterar o produto\n");
         printf("5-Excluir Produto\n");
+        printf("6-Pesquisar Produto\n");
         printf("0-Para sair\n");
         printf("--->");
         scanf("%d",&opc);
 
-        if (opc < 0 || opc > 5){
+        if (opc < 0 || opc > 6){
             printf("Entrada inválida detectada.\n");
             setbuf(stdin,NULL);
             opc = -1;//pra rodar denovo o do while
@@ -50,6 +51,9 @@ int main(){
 
          case 5:
             excluirProduto();
+            break;
+         case 6:
+            pesquisarProduto();
             break;
         
         case 0:

@@ -17,5 +17,6 @@ void alterarProduto();
 void excluirProduto();
 void salvarProdutos();
 void carregarEstoque();
+void pesquisarProduto();
 
 #endif 
