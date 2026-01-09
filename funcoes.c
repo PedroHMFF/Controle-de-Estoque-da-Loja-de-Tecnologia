@@ -15,12 +15,12 @@ void limpar_buffer() {// pra limpar
 }
 
 void cadastrarProduto(Produto *novoProduto){   
-    if (total_produtos == MAX_PRODUTOS){
+    if (total_produtos == MAX_PRODUTOS){//testando pra verificar se esta no maximo de produtos
         printf("Maximo de produtos na loja!!\n");
         return;
     }//if
 
-    novoProduto->id = total_produtos + 1;
+    novoProduto->id = total_produtos + 1;//aumentando o id pra adicionar o produto
 
     printf("\n==Cadastrando Produto==\n");
     printf("Digite o nome do produto:");
@@ -44,8 +44,8 @@ void cadastrarProduto(Produto *novoProduto){
 
     limpar_buffer();
     
-    produtos[total_produtos] = *novoProduto;
-    total_produtos++;
+    produtos[total_produtos] = *novoProduto;//pega o conteudo do novo produto, e coloca na variavel global produtos
+    total_produtos++;//incrementa o contador para apontar para a próxima vaga
 
     salvarProdutos();// salvando os produtos
 
@@ -60,6 +60,7 @@ void salvarProdutos(){
         return;
     }//if
 
+    //grava primeiro o número total e depois o array inteiro de uma vez
     fwrite(&total_produtos,sizeof(int),1,arqB);
     fwrite(produtos,sizeof(Produto),total_produtos,arqB);
 
@@ -92,7 +93,7 @@ void relatorioEstoque(){   //arrumar depois
     printf("\n%-4s | %-20s | %-20s | %-5s | %-10s | %-10s\n", "ID", "NOME","CATEGORIA", "QTD", "PRECO V.", "LUCRO PREV.");
     printf("----------------------------------------------------------------------\n");
 
-    for (int i = 0; i < total_produtos; i++){
+    for (int i = 0; i < total_produtos; i++){// Cálculo do lucro baseado na diferença de preço multiplicada pela quantidade
         // (Venda - Custo) que e pra descobrir o lucro por unidade, * Quantidade
         float lucroItem = (produtos[i].precoVenda - produtos[i].precoCusto) * produtos[i].quantidade;
 
@@ -113,7 +114,7 @@ void relatorioEstoque(){   //arrumar depois
 
 void excluirProduto(){
     int idExcluir;
-    int idx = -1;
+    int idx = -1;// comeca com -1 para indicar que ainda não achou o ID
     printf("Digite o id do produto que deseja excluir:");
     scanf("%d",&idExcluir);
     
@@ -128,15 +129,16 @@ void excluirProduto(){
         printf("Erro: Produto com ID %d nao encontrado.\n", idExcluir);
         return;
     }//
-    
+    //deslocamento--> puxa os itens da frente para "tapar o buraco" do excluído, se eu tirar o 1, o 2 vai no lugar dele e assim por diante
     for (int i = idx; i < total_produtos - 1; i++) {
         produtos[i] = produtos[i + 1];
     }//for
     total_produtos--;//diminuindo o total de produtos
 
+    //reatribui os IDs para manter a ordem sequencial (1, 2, 3...)
     for (int i = 0; i < total_produtos; i++) {
         produtos[i].id = i + 1;
-    }// realocando os ids do inicio
+    }
 
     salvarProdutos(); 
     printf("Produto excluido e IDs reorganizados com sucesso!\n");
@@ -149,6 +151,7 @@ void alterarProduto(){
     printf("Digite o ID do produto que deseja alterar:");
     scanf("%d",&id_alterar);
 
+    //validação de segurança para evitar estoque negativo
     for (int i = 0; i < total_produtos; i++){
         if (produtos[i].id == id_alterar){
             printf("\nDigite algum dos numeoros abaixo pra alterar oque deseja:\n");
@@ -253,6 +256,7 @@ void pesquisarProduto(){
     fgets(termo,50,stdin);
     termo[strcspn(termo, "\n")] = '\0';
 
+    //Converte termo de busca para maiúsculo
     for (int i = 0; i < termo[i]; i++){
         termoMaiusculo[i] = toupper(termo[i]);
     }
@@ -261,12 +265,12 @@ void pesquisarProduto(){
     printf("\n=== RESULTADO ===\n");
 
     for (int i = 0; i < total_produtos; i++) {
-        
+        //Converte nome do produto no banco para maiúsculo antes de comparar
         for (int j = 0; produtos[i].nome[j]; j++) {
             nomeNoBancoMaiusculo[j] = toupper(produtos[i].nome[j]);
         }//for
         nomeNoBancoMaiusculo[strlen(produtos[i].nome)] = '\0';
-
+        //Verifica se o termo existe em qualquer parte do nome
         if (strstr(nomeNoBancoMaiusculo,termoMaiusculo)!= NULL){
             printf("ID: %d | Nome: %s | Qtd: %d\n", 
                 produtos[i].id, produtos[i].nome, produtos[i].quantidade);
